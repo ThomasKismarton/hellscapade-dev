@@ -1,0 +1,1 @@
+MenuSelectAction(oBattle.currentUser, global.actionLibrary.attack);

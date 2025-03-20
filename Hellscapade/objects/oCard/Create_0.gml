@@ -1,0 +1,1 @@
+handPosition = -1;
