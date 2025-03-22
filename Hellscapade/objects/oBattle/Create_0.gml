@@ -209,6 +209,8 @@ function battleStateVictoryCheck () {
 	// Currently destroying enemy on battle start
     if (_partyLoss || _partyWin) {
         instance_activate_all();
+        instance_deactivate_object(oDeck);
+        instance_deactivate_object(oCard);
         instance_deactivate_object(oBattle);
     }
     battleState = battleStateTurnProgression;

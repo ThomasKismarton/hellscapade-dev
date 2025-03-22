@@ -39,6 +39,10 @@ function drawCards(_num) {
 	}			
 }
 
+function discardCard(_pos) {
+    var _card = cardsInHand[_pos];
+}
+
 function addCard(_card, _permanent) {
 	if (_permanent) {
 		array_push(fullDeck, _card);
