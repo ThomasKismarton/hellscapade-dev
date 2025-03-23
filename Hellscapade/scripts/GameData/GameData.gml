@@ -78,8 +78,8 @@ global.cards = {
 		cardSprite: sCardBasic,
         // The actual function to be performed when the action is taken
         // Keep in mind for playing cards later
-        func: function(_user, _targets) {
-            var _damage = ceil(_user.strength + random_range(_user.strength * -0.25, _user.strength * 0.25));
+        func: function(_targets) {
+            var _damage = ceil(5 + random_range(-2, 2));
             BattleChangeHp(_targets, -_damage, 0);
         }
 	}
@@ -152,8 +152,30 @@ global.enemies =
             var _target = _possibleTargets[_target_id];
             return [_action, _target]
 		}
-	}
-	,
+	},
+    skeleton: 
+        {
+            name: "Skeleton",
+            hp: 60,
+            hpMax: 60,
+            mp: 0,
+            mpMax: 0,
+            strength: 7,
+            sprites: {idle: sLegionnaire, attack: sLegionnaireAttack},
+            actions: [global.actionLibrary.attack],
+            xpValue : 25,
+            AIscript : function()
+            {
+                // Attack random party member
+                var _action = actions[0];
+                var _possibleTargets = array_filter(oBattle.partyUnits, function(_unit, _index) {
+                    return (_unit.hp > 0); 
+                });
+                
+                var _target = lowestHp(_possibleTargets);
+                return [_action, _target]
+            }
+        },
 	bat: 
 	{
 		name: "Bat",

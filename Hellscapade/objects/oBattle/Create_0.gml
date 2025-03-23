@@ -26,7 +26,10 @@ currentUser = noone;
 currentAction = -1;
 currentTargets = noone;
 
+// Tester code for an oDeck object
+// oDeck should not be created in oBattle, needs to persist beyond combat
 Deck(global.playerData.startDeck, global.playerData.maxHandSize);
+oDeck.initDeck();
 
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
@@ -80,7 +83,7 @@ function battleStateSelectAction () {
         if (_unit.object_index == oBattleUnitPC) {
 			
 			// Draw cards at the start of the turn equal to max hand size.
-			oDeck.initDeck();
+
 			oDeck.drawCards(_unit.maxHandSize);
 			
 			for (var c = 0; c < array_length(oDeck.cardsInHand); c++) {
@@ -184,7 +187,7 @@ function battleStatePerformAction () {
                 }
             }
             // Actually perform the mechanics of the action on the targets
-            currentAction.func(currentUser, currentTargets)
+            currentAction.func(currentUser, currentTargets);
         }
     } else {
         if (!instance_exists(oBattleEffect)) {

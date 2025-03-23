@@ -77,6 +77,8 @@
     {"id":{"name":"sCamera","path":"sprites/sCamera/sCamera.yy",},},
     {"id":{"name":"sCardBasic","path":"sprites/sCardBasic/sCardBasic.yy",},},
     {"id":{"name":"sDownArrow","path":"sprites/sDownArrow/sDownArrow.yy",},},
+    {"id":{"name":"sLegionnaire","path":"sprites/sLegionnaire/sLegionnaire.yy",},},
+    {"id":{"name":"sLegionnaireAttack","path":"sprites/sLegionnaireAttack/sLegionnaireAttack.yy",},},
     {"id":{"name":"sLuluAttack","path":"sprites/sLuluAttack/sLuluAttack.yy",},},
     {"id":{"name":"sLuluDefend","path":"sprites/sLuluDefend/sLuluDefend.yy",},},
     {"id":{"name":"sLuluDown","path":"sprites/sLuluDown/sLuluDown.yy",},},

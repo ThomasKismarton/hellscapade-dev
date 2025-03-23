@@ -10,6 +10,18 @@ function NewEncounter(_creator, _enemies, _bg)
 	);
 }
 
+function lowestHp(_units) {
+    var _lowest = 99999;
+    var _ret = -1;
+    for (var k = 0; k < array_length(_units); k++) {
+        if (_units[k].hp < _lowest) {
+            _lowest = _units[k].hp;
+            _ret = _units[k].id;
+        }
+    }
+    return _ret;
+}
+
 function BattleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     var _amt = _amount;
 	for (var k = 0; k < array_length(_targets); k++) {

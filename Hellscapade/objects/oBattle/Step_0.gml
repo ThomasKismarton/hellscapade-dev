@@ -53,7 +53,7 @@ if (cursor.active) {
             // Keyboard targeting
             if (_keyConfirm) {
                 array_push(activeTargets, activeReticle);
-                show_debug_message(activeTargets);
+                // show_debug_message(activeTargets);
             }
             
             // Click targeting
@@ -62,7 +62,7 @@ if (cursor.active) {
                 if (activeReticle != -4) {
                     array_push(activeTargets, activeReticle);
                 }
-                show_debug_message(activeTargets);
+                // show_debug_message(activeTargets);
             }
             
             // Confirm and execute action
