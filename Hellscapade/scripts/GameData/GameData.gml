@@ -15,7 +15,7 @@ global.actionLibrary = {
         // Keep in mind for playing cards later
         func: function(_user, _targets) {
             var _damage = ceil(_user.strength + random_range(_user.strength * -0.25, _user.strength * 0.25));
-            BattleChangeHp(_targets, -_damage, 0);
+            battleChangeHp(_targets, -_damage, 0);
         }
     },
     kaboom: {
@@ -33,7 +33,7 @@ global.actionLibrary = {
         // Keep in mind for playing cards later
         func: function(_user, _targets) {
             var _damage = 50;
-            BattleChangeHp(_targets, -_damage, 0);
+            battleChangeHp(_targets, -_damage, 0);
         }
     },
     ice:
@@ -56,7 +56,7 @@ global.actionLibrary = {
             } else {
                 _damage = irandom_range(15, 25);
             }
-            BattleChangeHp(_targets, -_damage);
+            battleChangeHp(_targets, -_damage);
             // BattleChangeMP(_user, -mpCost);
         }
     }
@@ -80,7 +80,7 @@ global.cards = {
         // Keep in mind for playing cards later
         func: function(_targets) {
             var _damage = ceil(5 + random_range(-2, 2));
-            BattleChangeHp(_targets, -_damage, 0);
+            battleChangeHp(_targets, -_damage, 0);
         }
 	}
 }

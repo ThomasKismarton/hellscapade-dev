@@ -7,6 +7,7 @@ unitRenderOrder = [];
 
 cursor = {
     activeUser: noone,
+    playedCard: noone,
     activeTargets: [],
     activeReticle: noone,
     numTargets: 0,
@@ -73,24 +74,16 @@ function battleStateSelectAction () {
             battleState = battleStateVictoryCheck;
             exit;
         }
-		
-		// Right now, populating an array called hand in GameData structs
-		// Instead, want to create a new deck object when entering battle
-		// oDeck can manage hand-based functions
-		// oCard has actual card data & functionality
         
         // Select an action to perform        
         if (_unit.object_index == oBattleUnitPC) {
 			
-			// Draw cards at the start of the turn equal to max hand size.
-
+			// Draw cards at the start of the turn equal to max hand size
 			oDeck.drawCards(_unit.maxHandSize);
-			
 			for (var c = 0; c < array_length(oDeck.cardsInHand); c++) {
 				var _card = oDeck.cardsInHand[c];
 				var _cardName = _card.name;
 			}
-			
 			show_debug_message(oDeck.cardsInHand);
 			
             var _menuOptions = [];
@@ -136,9 +129,12 @@ function battleStateSelectAction () {
     }
 }
 
-function beginAction(_user, _action, _targets) {
+// Card objects are essentially the same as action structs
+// Just have an object reference, but they contain all the same data
+// Even referenced the same way (. operator)
+function beginAction(_user, _card, _targets) {
     currentUser = _user;
-    currentAction = _action;
+    currentCard = _card;
     currentTargets = _targets;
     
     // Converts current targets into an array for later iterability.
@@ -150,7 +146,7 @@ function beginAction(_user, _action, _targets) {
     with(_user) {
         acting = true;
         // Play user animation for the specified action
-        if (!is_undefined(_action[$ "userAnimation"])) && (!is_undefined(_user.sprites[$ _action.userAnimation])) {
+        if (!is_undefined(_card[$ "userAnimation"])) && (!is_undefined(_user.sprites[$ _card.userAnimation])) {
             sprite_index = sprites[$ _action.userAnimation];
             image_index = 0;
         }
@@ -171,23 +167,23 @@ function battleStatePerformAction () {
             }
             
             // If there's an effect sprite for the current action,
-            if (variable_struct_exists(currentAction, "effectSprite")) {
+            if (variable_struct_exists(currentCard, "effectSprite")) {
                 // Check if single/multi-target or screen-wide effect
-                if (currentAction.effectOnTarget == MODE.ALWAYS) || ((currentAction.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1)) {
+                if (currentCard.effectOnTarget == MODE.ALWAYS) || ((currentCard.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1)) {
                     for (var i = 0; i < array_length(currentTargets); i++) {
                         // Create an instance of an effect on each valid target
                         entity = currentTargets[i];
-                        instance_create_depth(entity.x, entity.y, entity.depth-1, oBattleEffect, {sprite_index: currentAction.effectSprite});
+                        instance_create_depth(entity.x, entity.y, entity.depth-1, oBattleEffect, {sprite_index: currentCard.effectSprite});
                     }
                 } else {
                     // Creating a screen-wide effect
-                    var _effectSprite = currentAction._effectSprite;
-                    if (variable_instance_exists(currentAction, "effectSpriteNoTarget")) _effectSprite = currentAction.effectSpriteNoTarget;
+                    var _effectSprite = currentCard._effectSprite;
+                    if (variable_instance_exists(currentCard, "effectSpriteNoTarget")) _effectSprite = currentCard.effectSpriteNoTarget;
                     instance_create_depth(x, y, depth-100, oBattleEffect, {sprite_index: _effectSprite});
                 }
             }
             // Actually perform the mechanics of the action on the targets
-            currentAction.func(currentUser, currentTargets);
+            currentCard.func(currentUser, currentTargets);
         }
     } else {
         if (!instance_exists(oBattleEffect)) {
@@ -212,6 +208,7 @@ function battleStateVictoryCheck () {
 	// Currently destroying enemy on battle start
     if (_partyLoss || _partyWin) {
         instance_activate_all();
+        oDeck.emptyHand(0);
         instance_deactivate_object(oDeck);
         instance_deactivate_object(oCard);
         instance_deactivate_object(oBattle);

@@ -1,4 +1,4 @@
-function NewEncounter(_creator, _enemies, _bg)
+function newEncounter(_creator, _enemies, _bg)
 {
 	instance_create_depth 
 	( 
@@ -22,7 +22,7 @@ function lowestHp(_units) {
     return _ret;
 }
 
-function BattleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
+function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     var _amt = _amount;
 	for (var k = 0; k < array_length(_targets); k++) {
         _target = _targets[k];

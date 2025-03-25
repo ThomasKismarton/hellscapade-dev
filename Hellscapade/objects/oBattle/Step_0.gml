@@ -45,7 +45,7 @@ if (cursor.active) {
             activeReticle = targetSide[targetIndex];
             
             // Switch to AoE mode
-            if (activeAction.targetAll == MODE.VARIES) && (_keyToggle) {
+            if (playedCard.targetAll == MODE.VARIES) && (_keyToggle) {
                 targetAll = true;
                 activeTargets = [];
             }
@@ -68,7 +68,7 @@ if (cursor.active) {
             // Confirm and execute action
             // This would likely be translated as the condition of (array_length(targets) == num_targets) from prev. project
             if (array_length(activeTargets) >= numTargets) {
-                    with (oBattle) beginAction(cursor.activeUser, cursor.activeAction, cursor.activeTargets);
+                    with (oBattle) beginAction(cursor.activeUser, cursor.playedCard, cursor.activeTargets);
                     with (oMenu) instance_destroy();
                     active = false;
                     confirmDelay = 0;
@@ -84,9 +84,9 @@ if (cursor.active) {
             
             // Confirm and execute action
             // This would likely be translated as the condition of (array_length(targets) == num_targets) from prev. project
-            if (_keyConfirm) {
+            if (_keyConfirm || _click) {
                 activeTargets = targetSide;
-                with (oBattle) beginAction(cursor.activeUser, cursor.activeAction, cursor.activeTargets);
+                with (oBattle) beginAction(cursor.activeUser, cursor.playedCard, cursor.activeTargets);
                 with (oMenu) instance_destroy();
                 active = false;
                 confirmDelay = 0;

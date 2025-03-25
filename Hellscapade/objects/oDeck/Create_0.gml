@@ -41,7 +41,10 @@ function drawCards(_num) {
 	}			
 }
 
-function discardCard(_pos) {
+// _discEffects = boolean variable of whether or not
+// to trigger "on discard" effects of cards.
+// Allows us to differentiate between cleanup and intentional discards.
+function discardCard(_pos, _discEffects) {
     // Shift handPos of all cards to the right of the card
     for (var p = _pos; p < array_length(cardsInHand); p++) {
         cardsInHand[p].handPosition--;
@@ -51,6 +54,12 @@ function discardCard(_pos) {
     _card.handPosition = -1;
     array_push(discard, _card);
     array_delete(cardsInHand, _pos, 1);
+}
+
+function emptyHand(_discEffects) {
+	while (array_length(cardsInHand) > 0) {
+		discardCard(0, _discEffects);
+	}
 }
 
 function addCard(_card, _permanent) {
