@@ -65,7 +65,7 @@ function battleStateSelectAction () {
     // At the start of selecting an action, draw the menus
 	// To be replaced by drawing cards
 	
-    if (!instance_exists(oMenu)) {
+    if (!array_length(oDeck.cardsInHand) > 0) {
         // Grab current unit
         var _unit = unitTurnOrder[turn];
         
@@ -79,46 +79,14 @@ function battleStateSelectAction () {
         if (_unit.object_index == oBattleUnitPC) {
 			
 			// Draw cards at the start of the turn equal to max hand size
-			oDeck.drawCards(_unit.maxHandSize);
-			for (var c = 0; c < array_length(oDeck.cardsInHand); c++) {
-				var _card = oDeck.cardsInHand[c];
-				var _cardName = _card.name;
+			if (oDeck.handSize == 0) {
+				oDeck.drawCards(_unit.maxHandSize);
+				for (var c = 0; c < oDeck.handSize; c++) {
+					var _card = oDeck.cardsInHand[c];
+					var _cardName = _card.name;
+				}
 			}
 			show_debug_message(oDeck.cardsInHand);
-			
-            var _menuOptions = [];
-            var _subMenus = {};
-            var _actionList = _unit.actions;
-            
-            for (var i = 0; i < array_length(_actionList); i++) {
-                var _action = _actionList[i];
-                var _available = true;
-                var _nameAndCount = _action.name;
-                
-                // Push the action directly into the menu if it is not contained within a submenu
-                if (_action.subMenu == -1) {
-                    array_push(_menuOptions, {name: _nameAndCount, func: MenuSelectAction, args: [_unit, _action], avail: _available});
-                } else {
-                    if (is_undefined(_subMenus[$ _action.subMenu])) {
-                        variable_struct_set(_subMenus, _action.subMenu, [{name: _nameAndCount, func: MenuSelectAction, args: [_unit, _action], avail: _available}]);
-                    } else {
-                        array_push(_subMenus[$ _action.subMenu], [{name: _nameAndCount, func: MenuSelectAction, args: [_unit, _action], avail: _available}]);
-                    }
-                }
-            }
-            
-            var _subMenusArray = variable_struct_get_names(_subMenus);
-            for (var i = 0; i < array_length(_subMenusArray); i++) {
-                // Add an option to go back a level
-                array_push(_subMenus[$ _subMenusArray[i]], {name: "Back", func: MenuGoBack, args: -1, avail: true});
-                
-                // Add menu options for all other choices
-                array_push(_menuOptions, {name:_subMenusArray[i], func: SubMenu, args: [_subMenus[$ _subMenusArray[i]]], avail: true});
-            }
-            
-			// Create the instance of the Menu object, after populating menuOptions with all relevant data
-			// Luckily, cards are a fair bit simpler than menus
-            Menu(x+10, y+10, _menuOptions, , 74, 60);
 			
         } else { 
             // Signal to trigger enemy AI code when they take their turn.
@@ -133,6 +101,7 @@ function battleStateSelectAction () {
 // Just have an object reference, but they contain all the same data
 // Even referenced the same way (. operator)
 function beginAction(_user, _card, _targets) {
+	show_debug_message(_targets);
     currentUser = _user;
     currentCard = _card;
     currentTargets = _targets;
@@ -147,7 +116,7 @@ function beginAction(_user, _card, _targets) {
         acting = true;
         // Play user animation for the specified action
         if (!is_undefined(_card[$ "userAnimation"])) && (!is_undefined(_user.sprites[$ _card.userAnimation])) {
-            sprite_index = sprites[$ _action.userAnimation];
+            sprite_index = sprites[$ _card.userAnimation];
             image_index = 0;
         }
     }

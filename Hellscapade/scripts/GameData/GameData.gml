@@ -78,7 +78,7 @@ global.cards = {
 		cardSprite: sCardBasic,
         // The actual function to be performed when the action is taken
         // Keep in mind for playing cards later
-        func: function(_targets) {
+        func: function(_user, _targets) {
             var _damage = ceil(5 + random_range(-2, 2));
             battleChangeHp(_targets, -_damage, 0);
         }

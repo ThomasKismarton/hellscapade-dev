@@ -14,7 +14,7 @@ if (cursor.active) {
         
         comfirmDelay += 1;
         
-        if (comfirmDelay > 1) {
+        if (comfirmDelay > 100) {
             _keyConfirm = keyboard_check_pressed(vk_enter);
             _keyCancel = keyboard_check_pressed(vk_escape);
             _keyToggle = keyboard_check_pressed(vk_shift);
@@ -30,7 +30,7 @@ if (cursor.active) {
         // Simple filter prevents us from targeting dead enemy units.
         if (targetSide == oBattle.enemyUnits) {
             targetSide = array_filter(targetSide, function (_element, _index) {
-                return _element.hp > 0;    
+                return _element.hp > 0;
             });
         }
         
@@ -53,7 +53,6 @@ if (cursor.active) {
             // Keyboard targeting
             if (_keyConfirm) {
                 array_push(activeTargets, activeReticle);
-                // show_debug_message(activeTargets);
             }
             
             // Click targeting
@@ -62,17 +61,17 @@ if (cursor.active) {
                 if (activeReticle != -4) {
                     array_push(activeTargets, activeReticle);
                 }
-                // show_debug_message(activeTargets);
+                show_debug_message(activeTargets);
             }
             
             // Confirm and execute action
             // This would likely be translated as the condition of (array_length(targets) == num_targets) from prev. project
             if (array_length(activeTargets) >= numTargets) {
-                    with (oBattle) beginAction(cursor.activeUser, cursor.playedCard, cursor.activeTargets);
-                    with (oMenu) instance_destroy();
-                    active = false;
-                    confirmDelay = 0;
-                    activeTargets = [];
+                with (oBattle) beginAction(cursor.activeUser, cursor.playedCard, cursor.activeTargets);
+                oDeck.discardCard(oBattle.cursor.playedCard.handPosition-1, 0);
+				active = false;
+                confirmDelay = 0;
+                activeTargets = [];
             }
         } else {
             activeReticle = targetSide;
@@ -87,7 +86,7 @@ if (cursor.active) {
             if (_keyConfirm || _click) {
                 activeTargets = targetSide;
                 with (oBattle) beginAction(cursor.activeUser, cursor.playedCard, cursor.activeTargets);
-                with (oMenu) instance_destroy();
+				oDeck.discardCard(cursor.playedCard.handPosition, 0);
                 active = false;
                 confirmDelay = 0;
                 activeTargets = [];
