@@ -8,6 +8,10 @@ function newEncounter(_creator, _enemies, _bg)
 		oBattle,
 		{creator: _creator, enemies: _enemies, battleBackground: _bg}
 	);
+	global.handLeft = HAND_LEFT + camera_get_view_x(view_camera[0]);
+	global.handHeight = HAND_HEIGHT + camera_get_view_y(view_camera[0]);
+	show_debug_message(global.handLeft);
+	show_debug_message(global.handHeight);
 }
 
 function lowestHp(_units) {

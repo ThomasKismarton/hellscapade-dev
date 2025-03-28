@@ -20,6 +20,7 @@ draw_sprite_stretched(sBox,0,x,y+120,74,60);
 #macro COLUMN_NAME 90
 #macro COLUMN_HP 160
 #macro COLUMN_MP 220
+#macro INFO 260
 
 // Draw UI headers
 // valign + halign used to set drawing reference to the top left corner of oBattle.
@@ -31,6 +32,7 @@ draw_text(x+COLUMN_ENEMY, y+120, "ENEMY");
 draw_text(x+COLUMN_NAME, y+120, "NAME");
 draw_text(x+COLUMN_HP, y+120, "HP");
 draw_text(x+COLUMN_MP, y+120, "MP");
+draw_text(x+INFO, y+120, $"{mouse_x}, {mouse_y}")
 
 // Drawing list of enemies
 draw_set_font(fnOpenSansPX);
