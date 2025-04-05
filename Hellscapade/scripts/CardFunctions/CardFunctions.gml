@@ -1,5 +1,8 @@
-global.handLeft = 160;
-global.handHeight = 100;
+#macro HAND_LEFT 160
+#macro HAND_HEIGHT 94
+
+global.handLeft = 0;
+global.handHeight = 0;
 
 function Deck(_cards, _handSize) {
 	var cam_x = camera_get_view_x(view_camera[0]);

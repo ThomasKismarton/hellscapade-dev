@@ -24,7 +24,7 @@ roundCount = 0;
 battleWaitTimeFrames = 30;
 battleWaitTimeRemaining = 0;
 currentUser = noone;
-currentAction = -1;
+currentCard = noone;
 currentTargets = noone;
 
 // Tester code for an oDeck object
@@ -115,7 +115,7 @@ function beginAction(_user, _card, _targets) {
     with(_user) {
         acting = true;
         // Play user animation for the specified action
-        if (!is_undefined(_card[$ "userAnimation"])) && (!is_undefined(_user.sprites[$ _card.userAnimation])) {
+        if (variable_instance_exists(_card, "userAnimation") && (!is_undefined(_user.sprites[$ _card.userAnimation]))) {
             sprite_index = sprites[$ _card.userAnimation];
             image_index = 0;
         }
@@ -136,7 +136,7 @@ function battleStatePerformAction () {
             }
             
             // If there's an effect sprite for the current action,
-            if (variable_struct_exists(currentCard, "effectSprite")) {
+            if (variable_instance_exists(currentCard, "effectSprite")) {
                 // Check if single/multi-target or screen-wide effect
                 if (currentCard.effectOnTarget == MODE.ALWAYS) || ((currentCard.effectOnTarget == MODE.VARIES) && (array_length(currentTargets) <= 1)) {
                     for (var i = 0; i < array_length(currentTargets); i++) {
@@ -186,15 +186,17 @@ function battleStateVictoryCheck () {
 }
 
 function battleStateTurnProgression () {
-    turnCount++;
-    turn++;
-    
-    if (turn > array_length(unitTurnOrder) - 1) {
-        turn = 0;
-        roundCount++;
-    }
-    
-    battleState = battleStateSelectAction;
+    if (oDeck.handSize > 0) {
+		battleState = battleStateSelectAction;
+	} else {
+		turnCount++;
+	    turn++;
+	    if (turn > array_length(unitTurnOrder) - 1) {
+	        turn = 0;
+	        roundCount++;
+	    }
+	    battleState = battleStateSelectAction;
+	}
 }
 
 battleState = battleStateSelectAction;

@@ -53,7 +53,6 @@
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oCard","path":"objects/oCard/oCard.yy",},},
     {"id":{"name":"oDeck","path":"objects/oDeck/oDeck.yy",},},
-    {"id":{"name":"oMenu","path":"objects/oMenu/oMenu.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oSlime","path":"objects/oSlime/oSlime.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},

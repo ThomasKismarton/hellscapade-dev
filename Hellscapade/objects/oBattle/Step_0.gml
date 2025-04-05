@@ -14,7 +14,7 @@ if (cursor.active) {
         
         comfirmDelay += 1;
         
-        if (comfirmDelay > 100) {
+        if (comfirmDelay > 5) {
             _keyConfirm = keyboard_check_pressed(vk_enter);
             _keyCancel = keyboard_check_pressed(vk_escape);
             _keyToggle = keyboard_check_pressed(vk_shift);
@@ -61,7 +61,7 @@ if (cursor.active) {
                 if (activeReticle != -4) {
                     array_push(activeTargets, activeReticle);
                 }
-                show_debug_message(activeTargets);
+                // show_debug_message(activeTargets);
             }
             
             // Confirm and execute action
