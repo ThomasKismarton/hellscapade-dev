@@ -73,6 +73,7 @@
     {"id":{"name":"sBg","path":"sprites/sBg/sBg.yy",},},
     {"id":{"name":"sBgField","path":"sprites/sBgField/sBgField.yy",},},
     {"id":{"name":"sBox","path":"sprites/sBox/sBox.yy",},},
+    {"id":{"name":"sBoxMin","path":"sprites/sBoxMin/sBoxMin.yy",},},
     {"id":{"name":"sCamera","path":"sprites/sCamera/sCamera.yy",},},
     {"id":{"name":"sCardBasic","path":"sprites/sCardBasic/sCardBasic.yy",},},
     {"id":{"name":"sDownArrow","path":"sprites/sDownArrow/sDownArrow.yy",},},

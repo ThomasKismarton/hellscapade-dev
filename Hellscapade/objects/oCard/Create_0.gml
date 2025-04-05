@@ -9,14 +9,13 @@ function playCard() {
             active = true;
 			numTargets = _pc.numTargets;
             playedCard = _pc;
-            activeUser = oBattle.unitTurnOrder[oBattle.turn];
 	        if (playedCard.targetEnemyByDefault) {
 	            targetIndex = 0;
 	            targetSide = oBattle.enemyUnits;
 	            activeReticle = oBattle.enemyUnits[targetIndex];
 	        } else {
 	            targetSide = oBattle.partyUnits;
-	            activeReticle = activeUser;
+	            activeReticle = oBattle.partyUnits[0];
 	            // findSelf returns the index in an array of a specified element
 	            var _findSelf = function(_element) {
 	                return (_element == activeReticle);

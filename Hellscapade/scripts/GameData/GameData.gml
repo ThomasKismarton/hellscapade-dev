@@ -78,6 +78,7 @@ global.cards = {
 		cardSprite: sCardBasic,
         // The actual function to be performed when the action is taken
         // Keep in mind for playing cards later
+		// Mimics, but is different from attack action listed in actionLibrary
         func: function(_user, _targets) {
             var _damage = ceil(5 + random_range(-2, 2));
             battleChangeHp(_targets, -_damage, 0);
@@ -94,10 +95,12 @@ global.party =
 		hpMax: 89,
 		mp: 10,
 		mpMax: 15,
-		maxHandSize: 5,
+		maxHandSize: 1,
 		strength: 6,
-		sprites : { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown},
-		actions : [global.actionLibrary.attack, global.actionLibrary.kaboom]
+		spd: 1.5,
+		spdMax: 100,
+		spdBar: 0,
+		sprites : { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown}
 	}
 	,
 	{
@@ -107,9 +110,11 @@ global.party =
 		mp: 20,
 		mpMax: 30,
 		strength: 4,
-		maxHandSize: 5,
-		sprites : { idle: sQuestyIdle, attack: sQuestyCast, cast: sQuestyCast, down: sQuestyDown},
-		actions : [global.actionLibrary.attack, global.actionLibrary.ice, global.actionLibrary.kaboom]
+		maxHandSize: 1,
+		spd: 2,
+		spdMax: 100,
+		spdBar: 0,
+		sprites : { idle: sQuestyIdle, attack: sQuestyCast, cast: sQuestyCast, down: sQuestyDown}
 	}
 ]
 
@@ -122,8 +127,11 @@ global.playerData = {
 	block: 0,
 	hand: [],
 	handSize: 1,
-	maxHandSize: 5,
+	maxHandSize: 1,
 	strength: 6,
+	spd: 1,
+	spdMax: 100,
+	spdBar: 0,
 	startDeck: [["attack", 7]]
 }
 
@@ -141,6 +149,9 @@ global.enemies =
 		sprites: {idle: sSlime, attack: sSlimeAttack},
 		actions: [global.actionLibrary.attack],
 		xpValue : 15,
+		spd: 0.8,
+		spdMax: 100,
+		spdBar: 0,
 		AIscript : function()
 		{
 			// Attack random party member
@@ -164,6 +175,9 @@ global.enemies =
             sprites: {idle: sLegionnaire, attack: sLegionnaireAttack},
             actions: [global.actionLibrary.attack],
             xpValue : 25,
+			spd: 1.2,
+			spdMax: 100,
+			spdBar: 0,
             AIscript : function()
             {
                 // Attack random party member

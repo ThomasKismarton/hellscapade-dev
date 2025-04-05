@@ -55,6 +55,19 @@ function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     }
 }
 
+function addSpeed(_units, _turnOrder) {
+	for (var _k = 0; _k < array_length(_units); _k++) {
+		with (_units[_k]) {
+			// var = condition ? val_if_true : val_if_false
+			spdBar = (hp > 0) ? min(spdMax, spdBar + spd) : 0
+			if (spdBar >= spdMax) {
+				array_push(_turnOrder, self);
+				spdBar = 0;
+			}
+		}
+    }
+}
+
 function checkAllDead(_units) {
     for (var _current = 0; _current < array_length(_units); _current++) {
         if (_units[_current].hp > 0) {

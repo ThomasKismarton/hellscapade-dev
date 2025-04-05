@@ -50,6 +50,7 @@
     {"name":"sBg","order":1,"path":"sprites/sBg/sBg.yy",},
     {"name":"sBgField","order":22,"path":"sprites/sBgField/sBgField.yy",},
     {"name":"sBox","order":12,"path":"sprites/sBox/sBox.yy",},
+    {"name":"sBoxMin","order":14,"path":"sprites/sBoxMin/sBoxMin.yy",},
     {"name":"sCardBasic","order":35,"path":"sprites/sCardBasic/sCardBasic.yy",},
     {"name":"sDownArrow","order":1,"path":"sprites/sDownArrow/sDownArrow.yy",},
     {"name":"sLegionnaire","order":12,"path":"sprites/sLegionnaire/sLegionnaire.yy",},

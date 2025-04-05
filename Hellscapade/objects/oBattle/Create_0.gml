@@ -18,11 +18,11 @@ cursor = {
     comfirmDelay: 0,
     active: false
 }
-
 turnCount = 0;
 roundCount = 0;
 battleWaitTimeFrames = 30;
 battleWaitTimeRemaining = 0;
+unit = noone;
 currentUser = noone;
 currentCard = noone;
 currentTargets = noone;
@@ -35,7 +35,7 @@ oDeck.initDeck();
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
 {
-	enemyUnits[i] = instance_create_depth(x+250+(i*10), y+68+(i*20), depth-10, oBattleUnitEnemy, enemies[i]);
+	enemyUnits[i] = instance_create_depth(x+250+(i*10), y+48+(i*30), depth-10, oBattleUnitEnemy, enemies[i]);
 	array_push(units, enemyUnits[i]);
 }
 
@@ -43,12 +43,10 @@ for (var i = 0; i < array_length(enemies); i++)
 for (var i = 0; i < array_length(global.party); i++)
 {
     // Magic numbers here used for rendering in proper locations
-	partyUnits[i] = instance_create_depth(x+70-(i*10), y+68+(i*15), depth-10, oBattleUnitPC, global.party[i]);
+	partyUnits[i] = instance_create_depth(x+70-(i*10), y+48+(i*30), depth-10, oBattleUnitPC, global.party[i]);
 	array_push(units, partyUnits[i]);
 }
 
-// Shuffle Turn Order
-unitTurnOrder = array_shuffle(units);
 
 // Get render order
 // Generally, higher y value = futher down the screen, and thus drawn 1st.
@@ -67,7 +65,7 @@ function battleStateSelectAction () {
 	
     if (!array_length(oDeck.cardsInHand) > 0) {
         // Grab current unit
-        var _unit = unitTurnOrder[turn];
+        var _unit = array_pop(unitTurnOrder);
         
         // Check if the unit can act
         if(!instance_exists(_unit) || _unit.hp <= 0) {
@@ -77,6 +75,7 @@ function battleStateSelectAction () {
         
         // Select an action to perform        
         if (_unit.object_index == oBattleUnitPC) {
+			cursor.activeUser = _unit;
 			
 			// Draw cards at the start of the turn equal to max hand size
 			if (oDeck.handSize == 0) {
@@ -180,22 +179,16 @@ function battleStateVictoryCheck () {
         oDeck.emptyHand(0);
         instance_deactivate_object(oDeck);
         instance_deactivate_object(oCard);
-        instance_deactivate_object(oBattle);
+        instance_destroy(oBattle);
     }
     battleState = battleStateTurnProgression;
 }
 
 function battleStateTurnProgression () {
-    if (oDeck.handSize > 0) {
+    if (array_length(unitTurnOrder) > 0) {
 		battleState = battleStateSelectAction;
 	} else {
-		turnCount++;
-	    turn++;
-	    if (turn > array_length(unitTurnOrder) - 1) {
-	        turn = 0;
-	        roundCount++;
-	    }
-	    battleState = battleStateSelectAction;
+		addSpeed(units, unitTurnOrder);
 	}
 }
 
