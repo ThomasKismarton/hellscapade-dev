@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sCardBasic",
-    "path":"sprites/sCardBasic/sCardBasic.yy",
+    "name":"sCardBlank",
+    "path":"sprites/sCardBlank/sCardBlank.yy",
   },
   "spriteMaskId":null,
   "visible":true,

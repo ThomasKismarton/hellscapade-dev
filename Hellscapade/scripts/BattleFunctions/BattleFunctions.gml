@@ -55,6 +55,31 @@ function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     }
 }
 
+function modifyStatus(_units, _status, _stacks) {
+	_units = is_array(_units) ? _units : [_units];
+	for (var _u = 0; _u < array_length(_units); _u++) {
+		var _target = _units[_u];
+		if !(variable_instance_exists(_target.statuses, _status)) {
+			_target.statuses[$ _status] = _stacks;
+		} else {
+			_target.statuses[$ _status] = max(_target.statuses[$ _status] + _stacks, 0);
+		}
+	}
+}
+
+function poisonDamage(_units) {
+	_units = is_array(_units) ? _units : [_units];
+	for (var _u = 0; _u < array_length(_units); _u++) {
+		var _target = _units[_u];
+		if variable_instance_exists(_target.statuses, "Poison") {
+			if (_target.statuses[$ "Poison"] > 0) {
+				battleChangeHp([_target], -_target.statuses[$ "Poison"]);
+				modifyStatus(_target, "Poison", -1);
+			}
+		}
+	}
+}
+
 function addSpeed(_units, _turnOrder) {
 	for (var _k = 0; _k < array_length(_units); _k++) {
 		with (_units[_k]) {

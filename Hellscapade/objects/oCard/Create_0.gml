@@ -1,4 +1,5 @@
 handPosition = -1;
+sprite_index = cardSprite;
 
 function playCard() {
     var _pc = self;

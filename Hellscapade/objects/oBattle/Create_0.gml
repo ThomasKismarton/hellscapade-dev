@@ -35,7 +35,7 @@ oDeck.initDeck();
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
 {
-	enemyUnits[i] = instance_create_depth(x+250+(i*10), y+48+(i*30), depth-10, oBattleUnitEnemy, enemies[i]);
+	enemyUnits[i] = instance_create_depth(x+250+(i*10), y+48+(i*40), depth-10, oBattleUnitEnemy, enemies[i]);
 	array_push(units, enemyUnits[i]);
 }
 
@@ -43,10 +43,9 @@ for (var i = 0; i < array_length(enemies); i++)
 for (var i = 0; i < array_length(global.party); i++)
 {
     // Magic numbers here used for rendering in proper locations
-	partyUnits[i] = instance_create_depth(x+70-(i*10), y+48+(i*30), depth-10, oBattleUnitPC, global.party[i]);
+	partyUnits[i] = instance_create_depth(x+70-(i*10), y+48+(i*40), depth-10, oBattleUnitPC, global.party[i]);
 	array_push(units, partyUnits[i]);
 }
-
 
 // Get render order
 // Generally, higher y value = futher down the screen, and thus drawn 1st.
@@ -157,7 +156,7 @@ function battleStatePerformAction () {
         if (!instance_exists(oBattleEffect)) {
             battleWaitTimeRemaining--;
             if (battleWaitTimeRemaining == 0) {
-                battleState = battleStateVictoryCheck;
+                battleState = battleStateEndTurn;
             }
         }
     }
@@ -165,6 +164,8 @@ function battleStatePerformAction () {
 
 function battleStateEndTurn() {
     // Add functions for taking damage / reducing effects
+	poisonDamage(currentUser);
+	battleState = battleStateVictoryCheck;
 }
 
 function battleStateVictoryCheck () {

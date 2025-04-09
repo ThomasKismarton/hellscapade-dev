@@ -70,7 +70,7 @@ global.cards = {
         subMenu: -1,
         targetRequired : true,
         targetEnemyByDefault: true,
-        numTargets: 3,
+        numTargets: 1,
         targetAll: MODE.NEVER,
         userAnimation: "attack",
         effectSprite: sAttackBonk,
@@ -82,6 +82,26 @@ global.cards = {
         func: function(_user, _targets) {
             var _damage = ceil(5 + random_range(-2, 2));
             battleChangeHp(_targets, -_damage, 0);
+        }
+	},
+	poison: {
+		name: "Poisoned",
+        description: "{0} spits poison!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "cast",
+        effectSprite: sAttackFire,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardPoison,
+        // The actual function to be performed when the action is taken
+        // Keep in mind for playing cards later
+		// Mimics, but is different from attack action listed in actionLibrary
+        func: function(_user, _targets) {
+            var _stacks = 5;
+            modifyStatus(_targets, "Poison", _stacks);
         }
 	}
 }
@@ -95,8 +115,8 @@ global.party =
 		hpMax: 89,
 		mp: 10,
 		mpMax: 15,
-		maxHandSize: 1,
-		strength: 6,
+		maxHandSize: 2,
+		strength: 20,
 		spd: 1.5,
 		spdMax: 100,
 		spdBar: 0,
@@ -110,7 +130,7 @@ global.party =
 		mp: 20,
 		mpMax: 30,
 		strength: 4,
-		maxHandSize: 1,
+		maxHandSize: 4,
 		spd: 2,
 		spdMax: 100,
 		spdBar: 0,
@@ -127,12 +147,12 @@ global.playerData = {
 	block: 0,
 	hand: [],
 	handSize: 1,
-	maxHandSize: 1,
+	maxHandSize: 4,
 	strength: 6,
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 7]]
+	startDeck: [["attack", 2], ["poison", 2]]
 }
 
 //Enemy Data
