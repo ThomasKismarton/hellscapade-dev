@@ -85,7 +85,7 @@ global.cards = {
         }
 	},
 	poison: {
-		name: "Poisoned",
+		name: "Poison Cloud",
         description: "{0} spits poison!",
         subMenu: -1,
         targetRequired : true,
@@ -96,14 +96,49 @@ global.cards = {
         effectSprite: sAttackFire,
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardPoison,
-        // The actual function to be performed when the action is taken
-        // Keep in mind for playing cards later
-		// Mimics, but is different from attack action listed in actionLibrary
         func: function(_user, _targets) {
             var _stacks = 5;
             modifyStatus(_targets, "Poison", _stacks);
         }
-	}
+	},
+    boomerang: {
+		name: "Boomerang",
+        description: "{0} hucks a boomerang!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "attack",
+        effectSprite: sAttackBonk,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardBasic,
+        func: function(_user, _targets) {
+            for (var i = 0; i < array_length(_targets); i++) {
+                _target = _targets[i];
+                bounceDamage(_target, _targets 5, 2, 0);
+            }
+        }
+	},
+    venorang: {
+		name: "Venorang",
+        description: "{0} hucks a venomous boomerang!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "attack",
+        effectSprite: sAttackBonk,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardBasic,
+        func: function(_user, _targets) {
+            for (var i = 0; i < array_length(_targets); i++) {
+                _target = _targets[i];
+                bounceStatus(_target, _targets, "Poison", 3, 2, 0);
+            }
+        }
+	},
 }
 
 //Party data
@@ -152,7 +187,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 2], ["poison", 2]]
+	startDeck: [["attack", 2], ["poison", 2], ["boomerang", 2], ["venorang", 2]]
 }
 
 //Enemy Data

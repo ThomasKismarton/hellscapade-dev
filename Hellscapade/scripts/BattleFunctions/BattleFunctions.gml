@@ -55,6 +55,37 @@ function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     }
 }
 
+function bounceStatus(_target, _targets, _status, _stacks, _bounces, _mod = 0) {
+	modifyStatus([_target], _status, _stacks);
+	if (_bounces > 0) {
+		var _newTarget = getBounceTarget(_target, _targets);
+	}
+	bounceStatus(_newTarget, _targets, _status, _stacks + _mod, _bounces-1, _mod);
+}
+
+function bounceDamage(_target, _targets, _damage, _bounces, _mod) {
+	battleChangeHp([_target], -_damage);
+	if (_bounces > 0) {
+		var _newTarget = getBounceTarget(_target, _targets);
+	}
+	bounceDamage(_newTarget, _targets, _damage + _mod, _bounces-1, _mod)
+}
+
+function getBounceTarget(_target, _targets) {
+	var _bounceTargets = array_filter(_targets, function(_element, _index) {
+			return _element.id != _target.id;
+	});
+	return irandom(array_length(bounceTargets)-1);
+}
+
+function getAdjacent(_target, _targets) {
+	var _findSelf = function(_el, _ind) {
+		return _target.id == _el.id;
+	}
+	var _self_index = array_find_index(_targets, _findSelf);
+	return [_targets[_self_index - 1], _target, _targets[_self_index + 1]];
+}
+
 function modifyStatus(_units, _status, _stacks) {
 	_units = is_array(_units) ? _units : [_units];
 	for (var _u = 0; _u < array_length(_units); _u++) {
