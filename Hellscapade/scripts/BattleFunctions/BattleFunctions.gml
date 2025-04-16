@@ -26,10 +26,11 @@ function lowestHp(_units) {
     return _ret;
 }
 
-function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
-    var _amt = _amount;
-	for (var k = 0; k < array_length(_targets); k++) {
-        _target = _targets[k];
+function battleChangeHp(_units, _amount, _aliveDeadOrEither = 0) {
+    _units = is_array(_units) ? _units : [_units];
+	var _amt = _amount;
+	for (var k = 0; k < array_length(_units); k++) {
+        _target = _units[k];
         // 0 = Alive, 1 = Dead, 2 = Either
         var _failed = false;
         if (_aliveDeadOrEither == 0) && _target.hp <= 0 _failed = true;
@@ -55,39 +56,85 @@ function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
     }
 }
 
-function bounceStatus(_target, _targets, _status, _stacks, _bounces, _mod = 0) {
-	modifyStatus([_target], _status, _stacks);
-	if (_bounces > 0) {
-		bounceStatus(getBounceTarget(_target, _targets), _targets, _status, _stacks + _mod, _bounces-1, _mod);
+function bounceStatus(_units, _status, _stacks, _bounces, _mod = 0) {
+	_units = is_array(_units) ? _units : [_units]; 
+	for (var i = 0; i < array_length(_units), i++) {
+		var _target = _units[i];
+		// Apply status to the target
+		modifyStatus(_target, _status, _stacks);
+		// Bounce to the next
+		if (_bounces > 0) {
+			bounceStatus(getBounceTarget(_target), _status, _stacks + _mod, _bounces-1, _mod);
+		}
 	}
 }
 
-function bounceDamage(_target, _targets, _damage, _bounces, _mod) {
-	battleChangeHp([_target], -_damage);
-	if (_bounces > 0) {
-		bounceDamage(getBounceTarget(_target, _targets), _targets, _damage + _mod, _bounces-1, _mod)
+function bounceDamage(_units, _damage, _bounces, _mod = 0) {
+	_units = is_array(_units) ? _units : [_units]; 
+	for (var i = 0; i < array_length(_units), i++) {
+		var _target = _units[i];
+		// Damage the target
+		battleChangeHp(_target, -_damage);
+		// Bounce to the next
+		if (_bounces > 0) {
+			bounceDamage(getBounceTarget(_target), _damage + _mod, _bounces-1, _mod);
+		}
 	}
 }
 
-// Need to filter out dead enemies, currently targets the deceased
 // Need to determine if targeting oneself - should not be able to
-function getBounceTarget(_target, _targets) {
-	var _bounceTargets = array_filter(_targets, method({target: _target}, function(_element) {
-			return 10 == 10;
+function getBounceTarget(_target) {
+	var _bounceTargets = (_target.obeject_index == oBattleUnitEnemy) ? oBattle.enemyUnits : oBattle.partyUnits;
+	// Exclude self & dead targets from valid bounces
+	_bounceTargets = array_filter(_units, method({target: _target}, function(_element) {
+			return (target != _element && _element.hp > 0);
 	}));
+	show_debug_message("Filtered list of bounceable targets");
 	show_debug_message(_bounceTargets);
+	// Return next target
 	return _bounceTargets[irandom(array_length(_bounceTargets)-1)];
 }
 
-function getAdjacent(_target, _targets) {
+function getAdjacent(_target, _units) {
 	var _findSelf = function(_el, _ind) {
 		return _target.id == _el.id;
 	}
-	var _self_index = array_find_index(_targets, _findSelf);
-	return [_targets[_self_index - 1], _target, _targets[_self_index + 1]];
+	// Locate self
+	var _self_index = array_find_index(_units, _findSelf);
+	// Find targets adjacent to self
+	return [_units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units))]];
+}
+
+function splashDamage(_units, _damage) {
+	// Convert targets to array if needed
+	_units = is_array(_units) ? _units : [_units];
+	// Apply splash damage to each target
+	for (var i = 0; i < array_length(_units); i++) {
+		var _target = _units[i];
+		// Determine side to 'splash' on
+		var _unitSide = (_unit.object_index == oBattleUnitPC) ? oBattle.partyUnits : oBattle.enemyUnits;
+		// Grab adjacent units
+		var _hitList = getAdjacent(_unit, _unitSide);
+		battleChangeHp(_hitList, -_damage);
+	}
+}
+
+function splashStatus(_units, _status, _stacks) {
+	// Convert targets to array if needed
+	_units = is_array(_units) ? _units : [_units];
+	// Apply splash damage to each target
+	for (var i = 0; i < array_length(_units); i++) {
+		var _target = _units[i];
+		// Determine side to 'splash' on
+		var _unitSide = (_unit.object_index == oBattleUnitPC) ? oBattle.partyUnits : oBattle.enemyUnits;
+		// Grab adjacent units
+		var _hitList = getAdjacent(_unit, _unitSide);
+		modifyStatus(_hitList, _status, _stacks);
+	}
 }
 
 function modifyStatus(_units, _status, _stacks) {
+	// Convert
 	_units = is_array(_units) ? _units : [_units];
 	for (var _u = 0; _u < array_length(_units); _u++) {
 		var _target = _units[_u];
@@ -105,7 +152,7 @@ function poisonDamage(_units) {
 		var _target = _units[_u];
 		if variable_instance_exists(_target.statuses, "Poison") {
 			if (_target.statuses[$ "Poison"] > 0) {
-				battleChangeHp([_target], -_target.statuses[$ "Poison"]);
+				battleChangeHp(_target, -_target.statuses[$ "Poison"]);
 				modifyStatus(_target, "Poison", -1);
 			}
 		}

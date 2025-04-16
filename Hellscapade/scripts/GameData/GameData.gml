@@ -113,12 +113,8 @@ global.cards = {
         effectSprite: sCardBoomerang,
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBoomerang,
-		// Need to work out hard-coding of "_targets", use oBattle.cursor.targetSide to determine
         func: function(_user, _targets) {
-            for (var i = 0; i < array_length(_targets); i++) {
-                _target = _targets[i];
-                bounceDamage(_target, oBattle.enemyUnits, 5, 2, 0);
-            }
+            bounceDamage(_targets, 5, 2, 0);
         }
 	},
     venorang: {
@@ -134,12 +130,25 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardVenorang,
         func: function(_user, _targets) {
-            for (var i = 0; i < array_length(_targets); i++) {
-                _target = _targets[i];
-                bounceStatus(_target, oBattle.enemyUnits, "Poison", 3, 2, 0);
-            }
+            bounceStatus(_targets, "Poison", 3, 2, 0);
         }
 	},
+    bombshot: {
+        name: "Bomb Shot",
+        description: "{0} shoots a bomb!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "attack",
+        effectSprite: sAttackFire,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardBombShot,
+        func: function(_user, _targets) {
+            splashDamage(_targets, 10);
+        }
+    }
 }
 
 //Party data
@@ -188,7 +197,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 2], ["venorang", 2]]
+	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 1], ["venorang", 1], ["bombshot", 1]]
 }
 
 //Enemy Data
