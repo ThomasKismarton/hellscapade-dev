@@ -58,24 +58,25 @@ function battleChangeHp(_targets, _amount, _aliveDeadOrEither = 0) {
 function bounceStatus(_target, _targets, _status, _stacks, _bounces, _mod = 0) {
 	modifyStatus([_target], _status, _stacks);
 	if (_bounces > 0) {
-		var _newTarget = getBounceTarget(_target, _targets);
+		bounceStatus(getBounceTarget(_target, _targets), _targets, _status, _stacks + _mod, _bounces-1, _mod);
 	}
-	bounceStatus(_newTarget, _targets, _status, _stacks + _mod, _bounces-1, _mod);
 }
 
 function bounceDamage(_target, _targets, _damage, _bounces, _mod) {
 	battleChangeHp([_target], -_damage);
 	if (_bounces > 0) {
-		var _newTarget = getBounceTarget(_target, _targets);
+		bounceDamage(getBounceTarget(_target, _targets), _targets, _damage + _mod, _bounces-1, _mod)
 	}
-	bounceDamage(_newTarget, _targets, _damage + _mod, _bounces-1, _mod)
 }
 
+// Need to filter out dead enemies, currently targets the deceased
+// Need to determine if targeting oneself - should not be able to
 function getBounceTarget(_target, _targets) {
-	var _bounceTargets = array_filter(_targets, function(_element, _index) {
-			return _element.id != _target.id;
-	});
-	return irandom(array_length(bounceTargets)-1);
+	var _bounceTargets = array_filter(_targets, method({target: _target}, function(_element) {
+			return 10 == 10;
+	}));
+	show_debug_message(_bounceTargets);
+	return _bounceTargets[irandom(array_length(_bounceTargets)-1)];
 }
 
 function getAdjacent(_target, _targets) {

@@ -84,7 +84,7 @@ global.cards = {
             battleChangeHp(_targets, -_damage, 0);
         }
 	},
-	poison: {
+	poisonCloud: {
 		name: "Poison Cloud",
         description: "{0} spits poison!",
         subMenu: -1,
@@ -95,7 +95,7 @@ global.cards = {
         userAnimation: "cast",
         effectSprite: sAttackFire,
         effectOnTarget: MODE.ALWAYS,
-		cardSprite: sCardPoison,
+		cardSprite: sCardPoisonCloud,
         func: function(_user, _targets) {
             var _stacks = 5;
             modifyStatus(_targets, "Poison", _stacks);
@@ -110,13 +110,14 @@ global.cards = {
         numTargets: 1,
         targetAll: MODE.NEVER,
         userAnimation: "attack",
-        effectSprite: sAttackBonk,
+        effectSprite: sCardBoomerang,
         effectOnTarget: MODE.ALWAYS,
-		cardSprite: sCardBasic,
+		cardSprite: sCardBoomerang,
+		// Need to work out hard-coding of "_targets", use oBattle.cursor.targetSide to determine
         func: function(_user, _targets) {
             for (var i = 0; i < array_length(_targets); i++) {
                 _target = _targets[i];
-                bounceDamage(_target, _targets 5, 2, 0);
+                bounceDamage(_target, oBattle.enemyUnits, 5, 2, 0);
             }
         }
 	},
@@ -131,11 +132,11 @@ global.cards = {
         userAnimation: "attack",
         effectSprite: sAttackBonk,
         effectOnTarget: MODE.ALWAYS,
-		cardSprite: sCardBasic,
+		cardSprite: sCardVenorang,
         func: function(_user, _targets) {
             for (var i = 0; i < array_length(_targets); i++) {
                 _target = _targets[i];
-                bounceStatus(_target, _targets, "Poison", 3, 2, 0);
+                bounceStatus(_target, oBattle.enemyUnits, "Poison", 3, 2, 0);
             }
         }
 	},
@@ -187,7 +188,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 2], ["poison", 2], ["boomerang", 2], ["venorang", 2]]
+	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 2], ["venorang", 2]]
 }
 
 //Enemy Data

@@ -156,7 +156,7 @@ function battleStatePerformAction () {
         if (!instance_exists(oBattleEffect)) {
             battleWaitTimeRemaining--;
             if (battleWaitTimeRemaining == 0) {
-                if (currentUser.object_id == oBattleUnitPC && oDeck.handSize != 0) {
+                if (currentUser.object_index == oBattleUnitPC && oDeck.handSize != 0) {
                     battleState = battleStateSelectAction;
                 } else {
                     battleState = battleStateEndTurn;
