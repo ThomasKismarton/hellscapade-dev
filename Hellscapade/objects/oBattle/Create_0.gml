@@ -62,7 +62,7 @@ function battleStateSelectAction () {
     // At the start of selecting an action, draw the menus
 	// To be replaced by drawing cards
 	
-    if (!array_length(oDeck.cardsInHand) > 0) {
+    if (oDeck.handSize == 0) {
         // Grab current unit
         var _unit = array_pop(unitTurnOrder);
         
@@ -77,6 +77,11 @@ function battleStateSelectAction () {
 			cursor.activeUser = _unit;
 			
 			// Draw cards at the start of the turn equal to max hand size
+            // Signals 'start of turn'
+            if (statusCheck(_unit, "Bastion")) {
+                _unit.block += _unit.statuses[$ "Bastion"];
+            }
+
 			if (oDeck.handSize == 0) {
 				oDeck.drawCards(_unit.maxHandSize);
 				for (var c = 0; c < oDeck.handSize; c++) {
@@ -156,7 +161,7 @@ function battleStatePerformAction () {
         if (!instance_exists(oBattleEffect)) {
             battleWaitTimeRemaining--;
             if (battleWaitTimeRemaining == 0) {
-                if (currentUser.object_index == oBattleUnitPC && oDeck.handSize != 0) {
+                if (currentUser.object_index == oBattleUnitPC && (oDeck.handSize != 0 || oDeck.beingDrawn != 0)) {
                     battleState = battleStateSelectAction;
                 } else {
                     battleState = battleStateEndTurn;

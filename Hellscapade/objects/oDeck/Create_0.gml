@@ -4,6 +4,7 @@ toDraw = [];
 discard = []
 expended = [];
 fullDecksize = array_length(fullDeck);
+beingDrawn = 0;
 
 // Variables for managing the hand
 cardsInHand = [];

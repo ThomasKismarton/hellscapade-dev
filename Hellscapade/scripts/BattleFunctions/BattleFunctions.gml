@@ -150,14 +150,45 @@ function poisonDamage(_units) {
 	_units = is_array(_units) ? _units : [_units];
 	for (var _u = 0; _u < array_length(_units); _u++) {
 		var _target = _units[_u];
-		if variable_instance_exists(_target.statuses, "Poison") {
-			if (_target.statuses[$ "Poison"] > 0) {
-				battleChangeHp(_target, -_target.statuses[$ "Poison"]);
-				modifyStatus(_target, "Poison", -1);
-			}
+		if statusCheck(_target, "Poison") {
+			battleChangeHp(_target, -_target.statuses[$ "Poison"]);
+			modifyStatus(_target, "Poison", -1);
 		}
 	}
 }
+
+function statusCheck(_unit, _status) {
+	if (variable_instance_exists(_unit.statuses, _status)) {
+		return _unit.statuses[$ _status > 0];
+	}
+	return false;
+}
+
+function damageStatusMod(_user, _damage) {
+	if (statusCheck(_user, "Might")) {
+		_damage += _user.statuses[$ "Might"];
+	}
+	if (statusCheck(_user, "Empowered")) {
+		_damage += _user.statuses[$ "Empowered"];
+		modifyStatus(_unit, "Empowered", -9999);
+	}
+	if (statusCheck(_user, "Weakened")) {
+		_damage -= _user.statuses[$ "Weakened"];
+		modifyStatus(_unit, "Weakened", -9999);
+	}
+	if (statusCheck(_user, "Intimidated")) {
+		_damage = ceil(_damage * 0.66);
+		modifyStatus(_unit, "Intimidated", -1);
+	}
+	if (statusCheck(_user, "Emboldened")) {
+		_damage = ceil(_damage * 1.5);
+		modifyStatus(_unit, "Emboldened", -1);
+	}
+	return _damage;
+}
+
+// Stump of a function for taking block into account
+function damageBlockCheck(_target, _damage) {};
 
 function addSpeed(_units, _turnOrder) {
 	for (var _k = 0; _k < array_length(_units); _k++) {

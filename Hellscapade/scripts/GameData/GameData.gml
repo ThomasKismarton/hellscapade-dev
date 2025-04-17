@@ -81,7 +81,7 @@ global.cards = {
 		// Mimics, but is different from attack action listed in actionLibrary
         func: function(_user, _targets) {
             var _damage = ceil(5 + random_range(-2, 2));
-            battleChangeHp(_targets, -_damage, 0);
+            battleChangeHp(_targets, -damageStatusMod(_damage), 0);
         }
 	},
 	poisonCloud: {
@@ -114,7 +114,7 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBoomerang,
         func: function(_user, _targets) {
-            bounceDamage(_targets, 5, 2, 0);
+            bounceDamage(_targets, damageStatusMod(5), 2, 0);
         }
 	},
     venorang: {
@@ -146,7 +146,7 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBombShot,
         func: function(_user, _targets) {
-            splashDamage(_targets, 10);
+            splashDamage(_targets, damageStatusMod(10));
         }
     }
 }
@@ -160,8 +160,10 @@ global.party =
 		hpMax: 89,
 		mp: 10,
 		mpMax: 15,
+        block: 0,
+        strength: 20,
 		maxHandSize: 2,
-		strength: 20,
+        baseHandSize: 2,
 		spd: 1.5,
 		spdMax: 100,
 		spdBar: 0,
@@ -174,8 +176,10 @@ global.party =
 		hpMax: 44,
 		mp: 20,
 		mpMax: 30,
+        block: 0,
 		strength: 4,
 		maxHandSize: 4,
+        baseHandSize: 4,
 		spd: 2,
 		spdMax: 100,
 		spdBar: 0,
@@ -193,6 +197,7 @@ global.playerData = {
 	hand: [],
 	handSize: 1,
 	maxHandSize: 4,
+    baseHandSize: 4,
 	strength: 6,
 	spd: 1,
 	spdMax: 100,
