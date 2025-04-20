@@ -32,10 +32,12 @@ currentTargets = noone;
 Deck(global.playerData.startDeck, global.playerData.maxHandSize);
 oDeck.initDeck();
 
+var _xpad = 0;
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
 {
-	enemyUnits[i] = instance_create_depth(x+250+(i*10), y+48+(i*40), depth-10, oBattleUnitEnemy, enemies[i]);
+	_xpad = (i >= array_length(enemies)/2) ? 40 : 0;
+	enemyUnits[i] = instance_create_depth(x+220+(i*10)+_xpad, y+48+(i*40) - (2*_xpad), depth-10, oBattleUnitEnemy, enemies[i]);
 	array_push(units, enemyUnits[i]);
 }
 
@@ -89,7 +91,6 @@ function battleStateSelectAction () {
 					var _cardName = _card.name;
 				}
 			}
-			show_debug_message(oDeck.cardsInHand);
 			
         } else { 
             // Signal to trigger enemy AI code when they take their turn.
@@ -104,7 +105,6 @@ function battleStateSelectAction () {
 // Just have an object reference, but they contain all the same data
 // Even referenced the same way (. operator)
 function beginAction(_user, _card, _targets) {
-	show_debug_message(_targets);
     currentUser = _user;
     currentCard = _card;
     currentTargets = _targets;

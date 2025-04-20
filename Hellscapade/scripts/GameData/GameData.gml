@@ -81,7 +81,7 @@ global.cards = {
 		// Mimics, but is different from attack action listed in actionLibrary
         func: function(_user, _targets) {
             var _damage = ceil(5 + random_range(-2, 2));
-            battleChangeHp(_targets, -damageStatusMod(_damage), 0);
+            battleChangeHp(_targets, -damageStatusMod(_user, _damage), 0);
         }
 	},
 	poisonCloud: {
@@ -114,7 +114,7 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBoomerang,
         func: function(_user, _targets) {
-            bounceDamage(_targets, damageStatusMod(5), 2, 0);
+            bounceFunc(_targets, 2, battleChangeHp, [noone, damageStatusMod(_user, 5)]);
         }
 	},
     venorang: {
@@ -130,7 +130,7 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardVenorang,
         func: function(_user, _targets) {
-            bounceStatus(_targets, "Poison", 3, 2, 0);
+            bounceFunc(_targets, 3, modifyStatus, [noone, "Poison", 2]);
         }
 	},
     bombshot: {
@@ -146,7 +146,39 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBombShot,
         func: function(_user, _targets) {
-            splashDamage(_targets, damageStatusMod(10));
+            splashFunc(_targets, battleChangeHp, [noone, -damageStatusMod(_user, 10)]);
+        }
+    },
+	poisonboom: {
+        name: "Poison Boom",
+        description: "{0} sprays poison everywhere!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "attack",
+        effectSprite: sAttackFire,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardPoisonBoom,
+        func: function(_user, _targets) {
+            splashFunc(_targets, modifyStatus, [noone, "Poison", 4]);
+        }
+    },
+	bomberang: {
+        name: "Bomberang",
+        description: "{0} is making an ill-advised decision!",
+        subMenu: -1,
+        targetRequired : true,
+        targetEnemyByDefault: true,
+        numTargets: 1,
+        targetAll: MODE.NEVER,
+        userAnimation: "attack",
+        effectSprite: sAttackFire,
+        effectOnTarget: MODE.ALWAYS,
+		cardSprite: sCardBomberang,
+        func: function(_user, _targets) {
+            bounceFunc(_targets, 3, splashFunc, [noone, battleChangeHp, [noone, -2]]);
         }
     }
 }
@@ -202,7 +234,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 1], ["venorang", 1], ["bombshot", 1]]
+	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 0], ["venorang", 0], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 1]]
 }
 
 //Enemy Data

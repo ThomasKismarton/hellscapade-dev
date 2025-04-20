@@ -39,7 +39,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.13.0.190",
+    "IDEVersion":"2024.13.1.193",
   },
   "name":"Hellscapade",
   "resources":[
@@ -64,6 +64,7 @@
     {"id":{"name":"GameData","path":"scripts/GameData/GameData.yy",},},
     {"id":{"name":"Init","path":"scripts/Init/Init.yy",},},
     {"id":{"name":"MenuFunctions","path":"scripts/MenuFunctions/MenuFunctions.yy",},},
+    {"id":{"name":"Unused","path":"scripts/Unused/Unused.yy",},},
     {"id":{"name":"sAttackBonk","path":"sprites/sAttackBonk/sAttackBonk.yy",},},
     {"id":{"name":"sAttackCure","path":"sprites/sAttackCure/sAttackCure.yy",},},
     {"id":{"name":"sAttackExplode","path":"sprites/sAttackExplode/sAttackExplode.yy",},},
@@ -80,7 +81,10 @@
     {"id":{"name":"sCamera","path":"sprites/sCamera/sCamera.yy",},},
     {"id":{"name":"sCardBasic","path":"sprites/sCardBasic/sCardBasic.yy",},},
     {"id":{"name":"sCardBlank","path":"sprites/sCardBlank/sCardBlank.yy",},},
+    {"id":{"name":"sCardBomberang","path":"sprites/sCardBomberang/sCardBomberang.yy",},},
+    {"id":{"name":"sCardBombShot","path":"sprites/sCardBombShot/sCardBombShot.yy",},},
     {"id":{"name":"sCardBoomerang","path":"sprites/sCardBoomerang/sCardBoomerang.yy",},},
+    {"id":{"name":"sCardPoisonBoom","path":"sprites/sCardPoisonBoom/sCardPoisonBoom.yy",},},
     {"id":{"name":"sCardPoisonCloud","path":"sprites/sCardPoisonCloud/sCardPoisonCloud.yy",},},
     {"id":{"name":"sCardVenorang","path":"sprites/sCardVenorang/sCardVenorang.yy",},},
     {"id":{"name":"sDownArrow","path":"sprites/sDownArrow/sDownArrow.yy",},},
