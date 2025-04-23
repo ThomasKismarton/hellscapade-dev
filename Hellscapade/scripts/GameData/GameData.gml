@@ -114,7 +114,7 @@ global.cards = {
         effectOnTarget: MODE.ALWAYS,
 		cardSprite: sCardBoomerang,
         func: function(_user, _targets) {
-            bounceFunc(_targets, 2, battleChangeHp, [noone, damageStatusMod(_user, 5)]);
+            bounceFunc(_targets, 2, battleChangeHp, [noone, damageStatusMod(_user, -5)]);
         }
 	},
     venorang: {
@@ -234,7 +234,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 0], ["venorang", 0], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 1]]
+	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 2], ["venorang", 0], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 0]]
 }
 
 //Enemy Data

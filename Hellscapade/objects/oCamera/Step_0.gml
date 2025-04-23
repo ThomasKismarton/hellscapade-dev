@@ -1,4 +1,4 @@
-/// @description Update camera
+ /// @description Update camera
 
 //Update destination
 if (instance_exists(follow))
