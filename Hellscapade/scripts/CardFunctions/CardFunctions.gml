@@ -18,5 +18,5 @@ function Deck(_cards, _handSize) {
 }
 
 function Card(_cardname, _x, _y) {
-	return instance_create_depth(_x, _y, oBattle.depth-100, oCard, global.cards[$ _cardname]);
+	return instance_create_depth(_x, _y, -100, oCard, global.cards[$ _cardname]);
 }

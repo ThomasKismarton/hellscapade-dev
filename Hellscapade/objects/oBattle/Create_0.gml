@@ -36,7 +36,7 @@ var _xpad = 0;
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
 {
-	_xpad = (i >= array_length(enemies)/2) ? 40 : 0;
+	_xpad = (i >= max(array_length(enemies)/2, 2)) ? 40 : 0;
 	enemyUnits[i] = instance_create_depth(x+220+(i*10)+_xpad, y+48+(i*40) - (2*_xpad), depth-10, oBattleUnitEnemy, enemies[i]);
 	array_push(units, enemyUnits[i]);
 }
@@ -161,7 +161,9 @@ function battleStatePerformAction () {
         if (!instance_exists(oBattleEffect)) {
             battleWaitTimeRemaining--;
             if (battleWaitTimeRemaining == 0) {
-                if (currentUser.object_index == oBattleUnitPC && (oDeck.handSize != 0 || oDeck.beingDrawn != 0)) {
+				if (checkAllDead(partyUnits) || checkAllDead(enemyUnits)) {
+					battleState = battleStateVictoryCheck;
+				} else if (currentUser.object_index == oBattleUnitPC && (oDeck.handSize != 0 || oDeck.beingDrawn != 0)) {
                     battleState = battleStateSelectAction;
                 } else {
                     battleState = battleStateEndTurn;
@@ -189,6 +191,7 @@ function battleStateVictoryCheck () {
         oDeck.emptyHand(0);
         instance_deactivate_object(oDeck);
         instance_deactivate_object(oCard);
+		instance_destroy(oBattleUnit);
         instance_destroy(oBattle);
     }
     battleState = battleStateTurnProgression;

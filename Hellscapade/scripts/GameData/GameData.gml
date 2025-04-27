@@ -194,9 +194,9 @@ global.party =
 		mpMax: 15,
         block: 0,
         strength: 20,
-		maxHandSize: 2,
-        baseHandSize: 2,
-		spd: 1.5,
+		maxHandSize: 11,
+        baseHandSize: 11,
+		spd: 1.2,
 		spdMax: 100,
 		spdBar: 0,
 		sprites : { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown}
@@ -210,9 +210,9 @@ global.party =
 		mpMax: 30,
         block: 0,
 		strength: 4,
-		maxHandSize: 4,
-        baseHandSize: 4,
-		spd: 2,
+		maxHandSize: 12,
+        baseHandSize: 12,
+		spd: 1.2,
 		spdMax: 100,
 		spdBar: 0,
 		sprites : { idle: sQuestyIdle, attack: sQuestyCast, cast: sQuestyCast, down: sQuestyDown}
@@ -234,7 +234,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 0], ["poisonCloud", 0], ["boomerang", 2], ["venorang", 0], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 0]]
+	startDeck: [["attack", 1], ["poisonCloud", 1], ["boomerang", 1], ["venorang", 1], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 1]]
 }
 
 //Enemy Data
@@ -251,7 +251,7 @@ global.enemies =
 		sprites: {idle: sSlime, attack: sSlimeAttack},
 		actions: [global.actionLibrary.attack],
 		xpValue : 15,
-		spd: 0.8,
+		spd: 1.0,
 		spdMax: 100,
 		spdBar: 0,
 		AIscript : function()

@@ -103,7 +103,7 @@ function modifyStatus(_units, _status, _stacks) {
 		var _target = _units[_u];
 		// Creates the status if not currently present
 		if !(variable_instance_exists(_target.statuses, _status)) {
-			_target.statuses[$ _status] = _stacks;
+			_target.statuses[$ _status] = max(_stacks, 0);
 		} else {
 			_target.statuses[$ _status] = max(_target.statuses[$ _status] + _stacks, 0);
 		}
@@ -215,9 +215,5 @@ function checkAllDead(_units) {
             return false;
         }
     }
-	// If all units dead, destroy battle instances (end battle)
-	for (var _u = 0; _u < array_length(_units); _u++) {
-		instance_destroy(_units[_u]);
-	}
     return true;
 }
