@@ -27,6 +27,7 @@
   "ResourceOrderSettings":[
     {"name":"fnM3x6","order":2,"path":"fonts/fnM3x6/fnM3x6.yy",},
     {"name":"fnM5x7","order":1,"path":"fonts/fnM5x7/fnM5x7.yy",},
+    {"name":"oAudioMgr","order":1,"path":"objects/oAudioMgr/oAudioMgr.yy",},
     {"name":"oBattleEffect","order":4,"path":"objects/oBattleEffect/oBattleEffect.yy",},
     {"name":"oBattleFloatingText","order":5,"path":"objects/oBattleFloatingText/oBattleFloatingText.yy",},
     {"name":"oBattleUnit","order":1,"path":"objects/oBattleUnit/oBattleUnit.yy",},
@@ -43,7 +44,10 @@
     {"name":"Init","order":5,"path":"scripts/Init/Init.yy",},
     {"name":"MenuFunctions","order":6,"path":"scripts/MenuFunctions/MenuFunctions.yy",},
     {"name":"RoomScripts","order":9,"path":"scripts/RoomScripts/RoomScripts.yy",},
+    {"name":"Script8","order":10,"path":"scripts/Script8/Script8.yy",},
     {"name":"Unused","order":8,"path":"scripts/Unused/Unused.yy",},
+    {"name":"bgmValley","order":2,"path":"sounds/bgmValley/bgmValley.yy",},
+    {"name":"bgmValleyBattle","order":1,"path":"sounds/bgmValleyBattle/bgmValleyBattle.yy",},
     {"name":"sAttackBonk","order":21,"path":"sprites/sAttackBonk/sAttackBonk.yy",},
     {"name":"sAttackCure","order":1,"path":"sprites/sAttackCure/sAttackCure.yy",},
     {"name":"sAttackExplode","order":6,"path":"sprites/sAttackExplode/sAttackExplode.yy",},
