@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"RoomScripts",
+  "%Name":"MusicFunctions",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"RoomScripts",
+  "name":"MusicFunctions",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

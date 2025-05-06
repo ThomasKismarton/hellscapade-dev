@@ -27,10 +27,8 @@ currentUser = noone;
 currentCard = noone;
 currentTargets = noone;
 
-// Tester code for an oDeck object
-// oDeck should not be created in oBattle, needs to persist beyond combat
-Deck(global.playerData.startDeck, global.playerData.maxHandSize);
-oDeck.initDeck();
+
+
 
 var _xpad = 0;
 // Make enemies
