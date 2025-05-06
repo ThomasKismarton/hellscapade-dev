@@ -12,8 +12,12 @@ function newEncounter(_creator, _enemies, _bg)
 	oAudioMgr.switchBgm("Battle");
 	global.handLeft = HAND_LEFT + camera_get_view_x(view_camera[0]);
 	global.handHeight = HAND_HEIGHT + camera_get_view_y(view_camera[0]);
-	show_debug_message(global.handLeft);
-	show_debug_message(global.handHeight);
+    instance_create_layer (
+        camera_get_view_x(view_camera[0]) + camera_get_view_width(view_camera[0]) - 64,
+        camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) - 20,
+        "Deck",
+        oEndTurn
+    );
 }
 
 // Finds the lowest hp unit out of a set

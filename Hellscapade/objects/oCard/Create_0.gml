@@ -1,5 +1,6 @@
 handPosition = -1;
 sprite_index = cardSprite;
+persistent = true;
 
 function playCard() {
 	if (oBattle.battleWaitTimeRemaining == 0) {

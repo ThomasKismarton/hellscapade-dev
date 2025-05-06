@@ -1,4 +1,5 @@
-instance_deactivate_all(true);
+instance_deactivate_layer("Instances");
+instance_activate_layer("Deck");
 
 units = [];
 turn = 0;
@@ -26,9 +27,6 @@ unit = noone;
 currentUser = noone;
 currentCard = noone;
 currentTargets = noone;
-
-
-
 
 var _xpad = 0;
 // Make enemies
@@ -65,6 +63,7 @@ function battleStateSelectAction () {
     if (oDeck.handSize == 0) {
         // Grab current unit
         var _unit = array_pop(unitTurnOrder);
+        currentUser = _unit;
         
         // Check if the unit can act
         if(!instance_exists(_unit) || _unit.hp <= 0) {
@@ -187,8 +186,7 @@ function battleStateVictoryCheck () {
     if (_partyLoss || _partyWin) {
         instance_activate_all();
         oDeck.emptyHand(0);
-        instance_deactivate_object(oDeck);
-        instance_deactivate_object(oCard);
+        instance_deactivate_layer("Deck");
 		instance_destroy(oBattleUnit);
         instance_destroy(oBattle);
     }

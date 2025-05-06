@@ -4,21 +4,20 @@
 global.handLeft = 0;
 global.handHeight = 0;
 
-function Deck(_cards, _handSize) {
+function fillDeck(_deck, _cards, _handSize) {
 	var cam_x = camera_get_view_x(view_camera[0]);
 	var cam_y = camera_get_view_y(view_camera[0]);
-	var deck = instance_create_depth(cam_x, cam_y, -999, oDeck, {maxHandSize: _handSize});
-    with deck {
+    _deck.maxHandSize = _handSize;
+    with _deck {
 		for (var i = 0; i < array_length(_cards); i++) {
 			for (var qty = 0; qty < _cards[i][1]; qty++) {
-				var _card = Card(_cards[i][0], oDeck.x, oDeck.y);
+				var _card = Card(_cards[i][0], _deck.x, _deck.y);
 				addCard(_card, true);
 			}
 		}
-        persistent = true;
 	}
 }
 
 function Card(_cardname, _x, _y) {
-	return instance_create_depth(_x, _y, -100, oCard, global.cards[$ _cardname]);
+	return instance_create_layer(_x, _y, "Deck", oCard, global.cards[$ _cardname]);
 }

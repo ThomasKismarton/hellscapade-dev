@@ -249,7 +249,7 @@ global.enemies =
 		mpMax: 0,
 		strength: 5,
 		sprites: {idle: sSlime, attack: sSlimeAttack},
-		actions: [global.actionLibrary.attack],
+        actions: [global.actionLibrary.attack],
 		xpValue : 15,
 		spd: 1.0,
 		spdMax: 100,
@@ -300,8 +300,8 @@ global.enemies =
 		mp: 0,
 		mpMax: 0,
 		strength: 4,
+        actions: [global.actionLibrary.attack],
 		sprites: { idle: sBat, attack: sBatAttack},
-		actions: [global.actionLibrary.attack],
 		xpValue : 18,
 		AIscript : function()
 		{

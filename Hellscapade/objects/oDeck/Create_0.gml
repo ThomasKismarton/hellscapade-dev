@@ -5,6 +5,7 @@ discard = []
 expended = [];
 fullDecksize = array_length(fullDeck);
 beingDrawn = 0;
+persistent = 1;
 
 // Variables for managing the hand
 cardsInHand = [];

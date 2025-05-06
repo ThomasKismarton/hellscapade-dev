@@ -61,7 +61,6 @@ if (cursor.active) {
                 if (activeReticle != -4) {
                     array_push(activeTargets, activeReticle);
                 }
-                // show_debug_message(activeTargets);
             }
             
             // Confirm and execute action
