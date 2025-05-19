@@ -2,9 +2,18 @@ instance_deactivate_layer("Instances");
 instance_activate_layer("Deck");
 
 units = [];
-turn = 0;
+unit = noone;
+currentUser = noone;
+currentCard = noone;
+currentTargets = noone;
 unitTurnOrder = [];
 unitRenderOrder = [];
+
+turn = 0;
+turnCount = 0;
+roundCount = 0;
+battleWaitTimeFrames = 30;
+battleWaitTimeRemaining = 0;
 
 cursor = {
     activeUser: noone,
@@ -19,21 +28,13 @@ cursor = {
     comfirmDelay: 0,
     active: false
 }
-turnCount = 0;
-roundCount = 0;
-battleWaitTimeFrames = 30;
-battleWaitTimeRemaining = 0;
-unit = noone;
-currentUser = noone;
-currentCard = noone;
-currentTargets = noone;
 
 var _xpad = 0;
 // Make enemies
 for (var i = 0; i < array_length(enemies); i++)
 {
-	_xpad = (i >= max(array_length(enemies)/2, 2)) ? 40 : 0;
-	enemyUnits[i] = instance_create_depth(x+220+(i*10)+_xpad, y+48+(i*40) - (2*_xpad), depth-10, oBattleUnitEnemy, enemies[i]);
+	_xpad = int64(i/3) * 40;
+	enemyUnits[i] = instance_create_depth(x+120+(i*10)+_xpad, y+48+(i*40) - (3*_xpad), depth-10, oBattleUnitEnemy, enemies[i]);
 	array_push(units, enemyUnits[i]);
 }
 
@@ -188,6 +189,7 @@ function battleStateVictoryCheck () {
         oDeck.emptyHand(0);
         instance_deactivate_layer("Deck");
 		instance_destroy(oBattleUnit);
+        instance_destroy(oEndTurn);
         instance_destroy(oBattle);
     }
     battleState = battleStateTurnProgression;

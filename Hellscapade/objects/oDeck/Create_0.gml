@@ -10,6 +10,7 @@ persistent = 1;
 // Variables for managing the hand
 cardsInHand = [];
 handSize = 0;
+maxHandSize = 0;
 
 function drawCards(_num) {
 	for (var i = 0; i < _num; i++) {

@@ -1,23 +1,30 @@
 // Creates a new battle, sets camera position
 function newEncounter(_creator, _enemies, _bg)
 {
+    global.cam_x = camera_get_view_x(view_camera[0]);
+    global.cam_y = camera_get_view_y(view_camera[0]);
 	instance_create_depth 
 	( 
-		camera_get_view_x(view_camera[0]),
-		camera_get_view_y(view_camera[0]),
+		global.cam_x,
+		global.cam_y,
 		-99,
 		oBattle,
 		{creator: _creator, enemies: _enemies, battleBackground: _bg}
 	);
 	oAudioMgr.switchBgm("Battle");
-	global.handLeft = HAND_LEFT + camera_get_view_x(view_camera[0]);
+	global.handLeft = HAND_LEFT + global.cam_x;
 	global.handHeight = HAND_HEIGHT + camera_get_view_y(view_camera[0]);
-    instance_create_layer (
-        camera_get_view_x(view_camera[0]) + camera_get_view_width(view_camera[0]) - 64,
-        camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) - 20,
-        "Deck",
-        oEndTurn
-    );
+    if (instance_exists(oEndTurn)) {
+        oEndTurn.x = global.cam_x + camera_get_view_width(view_camera[0]) - 64;
+        oEndTurn.y = global.cam_y + camera_get_view_height(view_camera[0]) - 20;
+    } else {
+        instance_create_layer (
+            global.cam_x + camera_get_view_width(view_camera[0]) - 64,
+            global.cam_y + camera_get_view_height(view_camera[0]) - 20,
+            "Deck",
+            oEndTurn
+        );
+    }
 }
 
 // Finds the lowest hp unit out of a set
@@ -149,10 +156,22 @@ function getAdjacent(_target, _units) {
 	var _findSelf = method({target: _target}, function(_el, _ind) {
 		return target == _el;
 	});
+    
 	// Locate index of self
 	var _self_index = array_find_index(_units, _findSelf);
-	// Find targets adjacent to self
-	return array_unique([_units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units)-1)]]);
+    var _self_row = _self_index % 3;
+    var _potential_hits = [];
+    var _unit_cap = array_length(_units) - (1 + (2 -_self_row));
+    
+    if (_self_row == 0) { // Top Row
+        array_push(_potential_hits, _target, _units[min(_self_index + 1, array_length(_units))]); // Target and next unit down
+    } else if (_self_row == 1) { // Middle row
+        array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units))]); // Target, Up & Down
+    } else { // Bottom row
+        array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target); // Target and next unit up
+    }
+    array_push(_potential_hits, _units[max(_self_index - 3, _self_row)], _units[min(_self_index + 3, _unit_cap)]); // Left and right units
+	return array_unique(_potential_hits);
 }
 
 // Returns num stacks of specified status, if greater than 0

@@ -70,7 +70,7 @@ global.cards = {
         subMenu: -1,
         targetRequired : true,
         targetEnemyByDefault: true,
-        numTargets: 1,
+        numTargets: 3,
         targetAll: MODE.NEVER,
         userAnimation: "attack",
         effectSprite: sAttackBonk,
@@ -234,7 +234,7 @@ global.playerData = {
 	spd: 1,
 	spdMax: 100,
 	spdBar: 0,
-	startDeck: [["attack", 1], ["poisonCloud", 1], ["boomerang", 1], ["venorang", 1], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 1]]
+	startDeck: [["attack", 1], ["poisonCloud", 0], ["boomerang", 0], ["venorang", 0], ["bombshot", 1], ["poisonboom", 1], ["bomberang", 1]]
 }
 
 //Enemy Data

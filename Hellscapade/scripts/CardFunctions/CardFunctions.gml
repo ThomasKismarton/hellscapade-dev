@@ -5,8 +5,6 @@ global.handLeft = 0;
 global.handHeight = 0;
 
 function fillDeck(_deck, _cards, _handSize) {
-	var cam_x = camera_get_view_x(view_camera[0]);
-	var cam_y = camera_get_view_y(view_camera[0]);
     _deck.maxHandSize = _handSize;
     with _deck {
 		for (var i = 0; i < array_length(_cards); i++) {
