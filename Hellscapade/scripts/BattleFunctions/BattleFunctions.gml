@@ -128,7 +128,7 @@ function poisonDamage(_units) {
 	for (var _u = 0; _u < array_length(_units); _u++) {
 		var _target = _units[_u];
 		if statusCheck(_target, "Poison") {
-			battleChangeHp(_target, -_target.statuses[$ "Poison"]);
+			takeDamage(_target, _target.statuses[$ "Poison"], 1);
 			modifyStatus(_target, "Poison", -1);
 		}
 	}
@@ -211,8 +211,18 @@ function damageStatusMod(_user, _damage) {
 	return _damage;
 }
 
-// Stump of a function for taking block into account
-function damageBlockCheck(_target, _damage) {
+// Function that reduces damage according to block
+function takeDamage(_units, _damage, _piercing, _aDoE = 0) {
+	_units = is_array(_units) ? _units : [_units];
+	for (var i = 0; i < array_length(_units); i++) {
+		var _unit = _units[i];
+		if (!_piercing) {
+			var _newblock = max(_unit.block - _damage, 0);
+			_damage = max(_damage - _unit.block, 0);
+			_unit.block = _newblock;
+		}
+		battleChangeHp(_unit, -_damage, _aDoE);
+	}
 };
 
 // Determines who acts next
@@ -222,10 +232,16 @@ function addSpeed(_units, _turnOrder) {
 	for (var _k = 0; _k < array_length(_units); _k++) {
 		with (_units[_k]) {
 			// var = condition ? val_if_true : val_if_false
-			spdBar = (hp > 0) ? min(spdMax, spdBar + spd) : 0
+			if (hp > 0) {
+				spd = (statusCheck("Hastened") > 0) ? spd + 0.25 : spd;
+				spd = (statusCheck("Hindered") > 0) ? spd - 0.25 : spd;
+				spdBar = min(spdMax, spdBar + spd)
+			}
 			// If speed has reached threshold, take turn
 			if (spdBar >= spdMax) {
 				array_push(_turnOrder, self);
+				modifyStatus(self, "Hindered", -1);
+				modifyStatus(self, "Hastened", -1);
 				spdBar = 0;
 			}
 		}
