@@ -151,6 +151,7 @@ function getBounceTarget(_target) {
 }
 
 // Grabs the adjacent units to a battle entity
+// Save for reworking later
 function getAdjacent(_target, _units) {
 	// Define predicate function for finding self
 	var _findSelf = method({target: _target}, function(_el, _ind) {
@@ -164,9 +165,9 @@ function getAdjacent(_target, _units) {
     var _unit_cap = array_length(_units) - (1 + (2 -_self_row));
     
     if (_self_row == 0) { // Top Row
-        array_push(_potential_hits, _target, _units[min(_self_index + 1, array_length(_units))]); // Target and next unit down
+        array_push(_potential_hits, _target, _units[min(_self_index + 1, array_length(_units) - 1)]); // Target and next unit down
     } else if (_self_row == 1) { // Middle row
-        array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units))]); // Target, Up & Down
+        array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units) - 1)]); // Target, Up & Down
     } else { // Bottom row
         array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target); // Target and next unit up
     }
@@ -233,15 +234,15 @@ function addSpeed(_units, _turnOrder) {
 		with (_units[_k]) {
 			// var = condition ? val_if_true : val_if_false
 			if (hp > 0) {
-				spd = (statusCheck("Hastened") > 0) ? spd + 0.25 : spd;
-				spd = (statusCheck("Hindered") > 0) ? spd - 0.25 : spd;
+				spd = (statusCheck(self, "Hastened") > 0) ? spd + 0.25 : spd;
+				spd = (statusCheck(self, "Hindered") > 0) ? spd - 0.25 : spd;
 				spdBar = min(spdMax, spdBar + spd)
 			}
 			// If speed has reached threshold, take turn
 			if (spdBar >= spdMax) {
 				array_push(_turnOrder, self);
-				modifyStatus(self, "Hindered", -1);
-				modifyStatus(self, "Hastened", -1);
+				modifyStatus([self], "Hindered", -1);
+				modifyStatus([self], "Hastened", -1);
 				spdBar = 0;
 			}
 		}
