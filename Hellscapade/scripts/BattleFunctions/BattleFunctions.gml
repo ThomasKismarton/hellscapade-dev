@@ -162,16 +162,20 @@ function getAdjacent(_target, _units) {
 	var _self_index = array_find_index(_units, _findSelf);
     var _self_row = _self_index % 3;
     var _potential_hits = [];
-    var _unit_cap = array_length(_units) - (1 + (2 -_self_row));
     
     if (_self_row == 0) { // Top Row
-        array_push(_potential_hits, _target, _units[min(_self_index + 1, array_length(_units) - 1)]); // Target and next unit down
+        array_push(_potential_hits, _target, _units[min(_self_index + 1, array_length(_units) - 1)]); // Target and next unit
     } else if (_self_row == 1) { // Middle row
         array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target, _units[min(_self_index + 1, array_length(_units) - 1)]); // Target, Up & Down
     } else { // Bottom row
         array_push(_potential_hits, _units[max(_self_index - 1, 0)], _target); // Target and next unit up
     }
-    array_push(_potential_hits, _units[max(_self_index - 3, _self_row)], _units[min(_self_index + 3, _unit_cap)]); // Left and right units
+    if (_self_index - 3 >= 0) {
+        array_push(_potential_hits, _units[_self_index-3]);
+    }
+    if (_self_index + 3 <= array_length(_units) - 1) {
+        array_push(_potential_hits, _units[_self_index+3])
+    }
 	return array_unique(_potential_hits);
 }
 

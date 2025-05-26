@@ -12,7 +12,7 @@ unitRenderOrder = [];
 turn = 0;
 turnCount = 0;
 roundCount = 0;
-battleWaitTimeFrames = 30;
+battleWaitTimeFrames = 15;
 battleWaitTimeRemaining = 0;
 
 cursor = {
