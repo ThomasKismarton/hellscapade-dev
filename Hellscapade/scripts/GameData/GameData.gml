@@ -84,7 +84,7 @@ global.enemies =
 		hpMax: 30,
 		mp: 0,
 		mpMax: 0,
-	    block: 0,
+	    block: 5,
 		strength: 5,
 		sprites: {idle: sSlime, attack: sSlimeAttack},
         actions: [global.actionLibrary.attack],

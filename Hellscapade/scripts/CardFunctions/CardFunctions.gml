@@ -37,7 +37,7 @@ global.cards = {
         // Keep in mind for playing cards later
 		// Mimics, but is different from attack action listed in actionLibrary
         func: function(_user, _targets) {
-            var _damage = ceil(5 + random_range(-2, 2));
+            var _damage = 5;
             takeDamage(_targets, damageStatusMod(_user, _damage), 0);
         }
 	},

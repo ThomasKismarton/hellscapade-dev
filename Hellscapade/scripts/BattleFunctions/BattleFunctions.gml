@@ -218,15 +218,16 @@ function damageStatusMod(_user, _damage) {
 
 // Function that reduces damage according to block
 function takeDamage(_units, _damage, _piercing, _aDoE = 0) {
+    var _modDamage = _damage;
 	_units = is_array(_units) ? _units : [_units];
 	for (var i = 0; i < array_length(_units); i++) {
 		var _unit = _units[i];
 		if (!_piercing) {
 			var _newblock = max(_unit.block - _damage, 0);
-			_damage = max(_damage - _unit.block, 0);
+			_modDamage = max(_damage - _unit.block, 0);
 			_unit.block = _newblock;
 		}
-		battleChangeHp(_unit, -_damage, _aDoE);
+		battleChangeHp(_unit, -_modDamage, _aDoE);
 	}
 };
 
