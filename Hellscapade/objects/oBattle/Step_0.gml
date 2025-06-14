@@ -94,7 +94,6 @@ if (cursor.active) {
         
         // Cancel and return to previous menu
         if (_keyCancel) && (!_keyConfirm) {
-            with (oMenu) active = true;
             active = false;
             confirmDelay = 0;
             activeTargets = [];

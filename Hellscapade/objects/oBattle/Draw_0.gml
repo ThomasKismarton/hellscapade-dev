@@ -80,6 +80,15 @@ for (var i = 0; i < array_length(partyUnits); i++) {
 
 if (cursor.active) {
     with (cursor) {
+		draw_set_halign(fa_center);
+
+		var targetSelectString = string_concat("Targets Selected: ", array_length(activeTargets), " / ", numTargets);
+		var targetWidth = string_width(targetSelectString) + 10;
+		var targetX = global.cam_x + (global.battle_width / 2);
+		var targetY = global.cam_y + 15;
+		draw_sprite_stretched(sBox,0,targetX - (targetWidth / 2),targetY - 3, targetWidth,20);
+
+		draw_text(targetX, targetY, targetSelectString);
         // Single targeting
         if (activeReticle != noone) {
             if (!is_array(activeReticle)) {
