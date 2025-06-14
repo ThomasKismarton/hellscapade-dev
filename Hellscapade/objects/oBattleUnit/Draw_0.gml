@@ -26,7 +26,7 @@ struct_foreach(statuses, function(_name, _value) {
 		var _spName = "s" + _name;
 		var _statSprite = sprite_exists(asset_get_index(_spName)) ? asset_get_index(_spName) : sMissingStatus;
 	
-		draw_sprite_ext(_statSprite, -1, _statusX, _statusY, 1, 1, 0, c_white, masterAlpha);
+		draw_sprite_ext(_statSprite, -1, _statusX, _statusY, 0.5, 0.5, 0, c_white, masterAlpha);
 	
 		var _statTextX = _statusX + 2;
 		var _statTextY = _statusY + 2;
