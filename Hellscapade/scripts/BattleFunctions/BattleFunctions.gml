@@ -1,6 +1,8 @@
 // Creates a new battle, sets camera position
 function newEncounter(_creator, _enemies, _bg)
 {
+	global.battle_width = 320;
+	global.battle_height = 180;
     global.cam_x = camera_get_view_x(view_camera[0]);
     global.cam_y = camera_get_view_y(view_camera[0]);
 	instance_create_depth 
