@@ -115,6 +115,9 @@ global.cards = {
 		cardSprite: sCardPoisonBoom,
         func: function(_user, _targets) {
             splashFunc(_targets, modifyStatus, [noone, "Poison", 4]);
+            splashFunc(_targets, modifyStatus, [noone, "Spirit", 4]);
+            splashFunc(_targets, modifyStatus, [noone, "Combo", 4]);
+            splashFunc(_targets, modifyStatus, [noone, "Weakened", 4]);
         }
     },
 	bomberang: {

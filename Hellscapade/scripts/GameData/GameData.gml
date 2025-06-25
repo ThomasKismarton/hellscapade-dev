@@ -20,6 +20,10 @@ global.actionLibrary = {
     }
 }
 
+global.statusDescriptions = {
+    Poison: "Poison: Take x damage at the end of your turn."
+}
+
 //Party data
 global.party = 
 [
