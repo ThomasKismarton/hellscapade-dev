@@ -28,8 +28,8 @@ global.statusDescriptions = {
 	Sundered: "Sundered: Block gained reduced by 50%",
 	Emboldened: "Emboldened: Your next hit deals 50% more damage",
 	Empowered: "Empowered: Damage dealt reduced by X",
-	Intimidated: "Intimidated: Your next hit deals 50% less damage"
-	Weakened: "Weakened: Damage dealt reduced by X"
+	Intimidated: "Intimidated: Your next hit deals 50% less damage",
+	Weakened: "Weakened: Damage dealt reduced by X",
 	Might: "Might: All damage dealt increased by X",
 	Cunning: "Cunning: Draw an additional X cards at the start of your turn",
 	Bastion: "Bastion: Gain X block at the start of your turn",
@@ -37,7 +37,7 @@ global.statusDescriptions = {
 	Dodge: "Dodge: Avoid the next X harmful effects",
 	Combo: "Combo: Attacks deal X additional damage until the end of the turn.",
 	Spirit: "Spirit: At the start of your turn, heal X.",
-	Transcendence: "Transcendence: Gain X Spirit at the start of your turn."
+	Transcendence: "Transcendence: Gain X Spirit at the start of your turn.",
 	Grit: "Grit: Reduce damage taken from the next hit by 50%",
 	TrueGrit: "True Grit: Reduce damage taken from the next hit by 80%",
 	Retaliation: "Retaliation: When hit, consume all stacks and deal damage to the attacker equal to stacks consumed.",

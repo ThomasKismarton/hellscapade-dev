@@ -20,19 +20,19 @@ draw_sprite_stretched_ext(sBoxMin, -1, spd_x, spd_y, spdBarLen, 4, c_white, 0.5 
 draw_sprite_stretched_ext(sBoxMin, -1, spd_x, spd_y, self.spdBar/3, 4, c_yellow, masterAlpha);
 
 statOrder = 0;
-var _statusCount = struct_names_count(statuses); // May need to rework to account for statuses = 0
-var _tboxYoff = _statusCount * 45;
-var _tboxHeight = _statusCount * 50;
-var _tboxWidth = 100;
+statusCount = struct_names_count(statuses); // May need to rework to account for statuses = 0
+tboxYoff = statusCount * 45;
+tboxHeight = statusCount * 50;
+tboxWidth = 100;
 
 if (hoverTime >= 30) {
-    draw_sprite_stretched(sBox, -1, x - self.sprite_width, y - self.sprite_height + _tboxYoff, _tboxWidth, _tboxHeight);
+    draw_sprite_stretched(sBox, -1, x - self.sprite_width, y - self.sprite_height, tboxWidth, tboxHeight);
 }
 
 struct_foreach(statuses, function(_name, _value) {
 	if (_value > 0 && hp > 0) {
         // Set coordinates for sprite of status
-		var _statusX = x - 4 * _statusCount + statOrder * 8;
+		var _statusX = x - 4 * statusCount + statOrder * 8;
 		var _statusY = y + self.sprite_height - self.sprite_yoffset + 4;
 		var _spName = "s" + _name;
         // Use placeholder for missing sprites
@@ -45,11 +45,14 @@ struct_foreach(statuses, function(_name, _value) {
         draw_text_color(_statTextX, _statTextY, _value, c_white, c_white, c_white, c_white, masterAlpha * 0.95);
 
         // If hovered for half a second, display descriptions for statuses
+        // Continue updating for dynamic height of hovered status tooltips.
+        var _lastPos = 0;
         if (hoverTime >= 30) {
             draw_set_font(fnM5x7);
             draw_set_halign(fa_left);
             var _statDesc = global.statusDescriptions[$ _name];
-            draw_text_ext(x - self.sprite_width + 10, y - self.sprite_height + statOrder * 45, _statDesc, 10, int(0.8 * _tboxWidth));
+            show_debug_message(string_length(_statDesc));
+            draw_text_ext(x - self.sprite_width + 10, y - self.sprite_height + _lastPos, _statDesc, 10, int64(0.8 * tboxWidth));
         }
         statOrder += 1;
 	}
